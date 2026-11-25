@@ -1,0 +1,8 @@
+{
+  "appId": "com.createpanel.electric",
+  "appName": "Create Panel",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  }
+}

@@ -1,0 +1,13 @@
+Create Panel — Android AAB build files
+
+یہ فولڈر اب Capacitor کی بنیادی فائلوں اور GitHub Actions workflow کے ساتھ تیار ہے۔ اصل ویب ایپ کی فائلیں تبدیل نہیں کی گئیں۔
+
+اہم:
+- GitHub پر نیا private repository بنائیں اور اس فولڈر کے تمام مواد upload کریں۔
+- GitHub Actions میں workflow چلانے سے پہلے Android upload keystore اور چار GitHub Actions secrets درکار ہیں:
+  ANDROID_KEYSTORE_BASE64
+  ANDROID_KEYSTORE_PASSWORD
+  ANDROID_KEY_ALIAS
+  ANDROID_KEY_PASSWORD
+- Keystore محفوظ رکھیں؛ اسے کھو دینے سے آئندہ اسی Play Store app کی updates مشکل ہو سکتی ہیں۔
+- مکمل طریقہ ChatGPT کی ہدایات کے مطابق کریں۔

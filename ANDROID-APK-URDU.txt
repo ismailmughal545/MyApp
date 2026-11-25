@@ -1,0 +1,17 @@
+Create Panel — Android APK build
+
+یہ ورژن پہلے موبائل پر انسٹال اور ٹیسٹ کرنے کے لیے Debug APK بناتا ہے۔
+Google Play Store کے لیے بعد میں الگ Signed Release AAB بنائی جا سکتی ہے۔
+
+GitHub موبائل طریقہ:
+1. اس ZIP کو Extract کریں۔
+2. GitHub میں نیا repository بنائیں (Private یا Public)۔
+3. Extract کیے گئے فولڈر کے اندر موجود تمام فائلیں اور فولڈرز repository کے root میں upload کریں۔ .github/workflows/android-apk.yml بھی لازمی ہے۔
+4. GitHub repository میں Actions کھولیں۔
+5. اگر پہلی بار Actions بند ہوں تو Enable Actions کریں۔
+6. Build Android APK workflow کھولیں، Run workflow دبائیں۔
+7. مکمل ہونے کے بعد workflow run کے نیچے Artifacts سے create-panel-debug-apk ڈاؤن لوڈ کریں۔
+8. ZIP artifact کو Android پر Extract کریں اور app-debug.apk کھول کر انسٹال کریں۔
+اگر Android حفاظتی اجازت مانگے تو صرف اسی APK کے لیے browser/files app کو Install unknown apps کی اجازت دیں۔
+
+نوٹ: یہ Debug APK ذاتی ٹیسٹنگ کے لیے ہے، Play Store پر اپلوڈ کرنے کے لیے نہیں۔
