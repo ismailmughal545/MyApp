@@ -427,21 +427,55 @@ try{localStorage.removeItem('cpMyTools')}catch{}try{let saved=localStorage.getIt
 </script><script src="breakers-data.js"></script><script src="breaker3d.js"></script><script>if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}</script>
 <script id="android-back-handler">
 (function () {
+  /* Closes exactly one thing: whichever is the topmost open layer right now.
+     Order matters — check the most "on top" layer first. */
+  function closeOverlayIfOpen() {
+    const overlay = document.getElementById('overlay');
+    if (overlay && getComputedStyle(overlay).display !== 'none') {
+      overlay.style.display = 'none';
+      return true;
+    }
+    return false;
+  }
+  function closeLayersPanelIfOpen() {
+    const btn = document.getElementById('layersBtn');
+    if (btn && btn.classList.contains('on')) {
+      btn.click();
+      return true;
+    }
+    return false;
+  }
+  function backStep() {
+    // the 3D part editor knows how to step back to its own gallery screen
+    if (typeof window.cpBreakerBackStep === 'function' && window.cpBreakerBackStep()) return true;
+    if (closeOverlayIfOpen()) return true;
+    if (closeLayersPanelIfOpen()) return true;
+    return false; // nothing open — we're already at the canvas (the root screen)
+  }
+  window.cpBackStep = backStep;
+
+  const Cap = window.Capacitor;
+  if (Cap && Cap.Plugins && Cap.Plugins.App) {
+    // Packaged Android app: take full control of the hardware back button.
+    // Registering this listener disables Capacitor's default behaviour, so
+    // every case (including exiting at the root screen) must be handled here.
+    Cap.Plugins.App.addListener('backButton', function () {
+      if (!backStep()) Cap.Plugins.App.exitApp();
+    });
+    return;
+  }
+
+  // Fallback for plain browser / PWA testing, where there is no hardware
+  // back button to hook into — approximate it with the browser's own back
+  // gesture, closing one layer per press instead of leaving the page.
   function keepBackState() {
     history.pushState({ appBackGuard: true }, '', location.href);
   }
-
   if (!history.state || !history.state.appBackGuard) {
     keepBackState();
   }
-
   window.addEventListener('popstate', function () {
-    const overlay = document.getElementById('overlay');
-
-    if (overlay && getComputedStyle(overlay).display !== 'none') {
-      overlay.style.display = 'none';
-    }
-
+    backStep();
     keepBackState();
   });
 })();

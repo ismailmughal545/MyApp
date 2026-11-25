@@ -886,4 +886,17 @@
     }
     closeEditor(); toolset('select'); draw();
   }
+
+  /* ============================== hardware back button hook ==============================
+     Lets the Android back button step out of the 3D editor one level at a time (back to the
+     gallery it was opened from), exactly like tapping the on-screen "#b3Back" button does,
+     instead of closing everything at once. Returns true if it handled the back press. */
+  window.cpBreakerBackStep = function () {
+    if (ui && ui.root && ui.root.classList.contains('open')) {
+      closeEditor();
+      if (galTarget) openGallery(galTarget.id); else openGallery('more');
+      return true;
+    }
+    return false;
+  };
 })();
