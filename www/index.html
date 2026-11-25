@@ -424,4 +424,26 @@ btn.onclick=()=>{open=!open;panel.classList.toggle('open',open);btn.classList.to
 })();
 
 try{localStorage.removeItem('cpMyTools')}catch{}try{let saved=localStorage.getItem('createPanelDrawing');if(saved){const d=JSON.parse(saved);loadImages(d);items=cleanItems(Array.isArray(d)?d:(d.objects||[]));if(typeof d.bgColor==='string'&&/^#[0-9a-fA-F]{6}$/.test(d.bgColor))bgColor=d.bgColor;if(d.grid>2)grid=d.grid;if(d.name)projName=safeName(String(d.name))}}catch{items=[]}try{resize()}catch(e){items=[];try{localStorage.removeItem('createPanelDrawing')}catch{}resize()}applyGrid();
-</script><script src="breakers-data.js"></script><script src="breaker3d.js"></script><script>if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}</script></body></html>
+</script><script src="breakers-data.js"></script><script src="breaker3d.js"></script><script>if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}</script>
+<script id="android-back-handler">
+(function () {
+  function keepBackState() {
+    history.pushState({ appBackGuard: true }, '', location.href);
+  }
+
+  if (!history.state || !history.state.appBackGuard) {
+    keepBackState();
+  }
+
+  window.addEventListener('popstate', function () {
+    const overlay = document.getElementById('overlay');
+
+    if (overlay && getComputedStyle(overlay).display !== 'none') {
+      overlay.style.display = 'none';
+    }
+
+    keepBackState();
+  });
+})();
+</script>
+\n</body></html>
