@@ -31,18 +31,19 @@
 
 
 .palette{display:none}
-.positionTabs{display:flex;gap:6px;overflow-x:auto;margin:0 0 12px;border-bottom:1px solid #dce3eb}
-.positionTabs button{border:0;background:transparent;padding:9px 12px;font-size:14px;color:#526273;white-space:nowrap;border-bottom:3px solid transparent}
+.positionTabs{display:flex;gap:3px;overflow-x:auto;margin:0 0 2px;border-bottom:1px solid #dce3eb}
+.positionTabs button{margin:0;border:0;background:transparent;padding:3px 7px;font-size:12px;color:#526273;white-space:nowrap;border-bottom:2px solid transparent}
 .positionTabs button.active{color:#147bd1;border-bottom-color:#147bd1;font-weight:700}
-.positionStep{display:flex;align-items:center;gap:6px}.positionStep button{width:40px;height:42px;border:1px solid #d5d9dd;border-radius:9px;background:#eef2f6;font-size:22px}.positionStep input{width:66px;height:42px;text-align:center;border:1px solid #d5d9dd;border-radius:9px;font-size:17px;background:#fff}
-.positionGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
-.positionGrid button{min-height:52px;border:1px solid #dce4ed;border-radius:10px;background:#fff;font-size:22px;color:#243746}
+.positionStep{display:flex;align-items:center;gap:3px}.positionStep button{margin:0;width:22px;height:22px;border:1px solid #d5d9dd;border-radius:6px;background:#eef2f6;font-size:13px}.positionStep input{margin:0;width:36px;height:22px;text-align:center;border:1px solid #d5d9dd;border-radius:6px;font-size:11px;background:#fff}
+.positionGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:3px 0}
+.positionGrid button{margin:0;min-height:22px;border:1px solid #dce4ed;border-radius:7px;background:#fff;font-size:12px;color:#243746}
 .positionGrid button:active{background:#dceeff}
-.positionMeta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0}
+.positionMeta{display:flex;align-items:center;justify-content:space-between;gap:5px;margin:2px 0}
+.positionMeta label{font-size:11px}
 .positionMeta input{max-width:110px}
-.positionXY{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.positionXY label{font-size:12px;color:#526273}
-.positionXY input{width:100%;padding:9px;border:1px solid #d5d9dd;border-radius:8px;font-size:15px}
+.positionXY{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.positionXY label{font-size:10px;color:#526273}
+.positionXY input{margin:0;width:100%;padding:4px;border:1px solid #d5d9dd;border-radius:6px;font-size:12px}
 .colorStudio{display:flex;flex-direction:column;gap:12px;margin:14px 0}.colorRow{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e4e9f0;border-radius:14px;padding:12px}.colorRow label{font-size:13px;color:#596777;flex:1}.colorRow input[type=color]{width:64px;height:52px;border:2px solid #e6ebf2;background:#fff;padding:4px;border-radius:16px;cursor:pointer;box-shadow:0 2px 8px #15283a12}.hexBox{display:flex;gap:10px;align-items:center}.hexBox input{flex:1;font-family:monospace}.colorPreview{width:44px;height:44px;border-radius:12px;border:1px solid #dce2e8}
 
 /* V11 clean compact UI */
@@ -265,13 +266,13 @@ const SHAPE_CHOICES=[['Rectangle','rect'],['Square','square'],['Rounded Rectangl
 function positionPanel(){
  if(sel<0){show('<h3>Position</h3><p>Please select an object on the canvas first.</p><button id="close">Close</button>');return}
  const o=items[sel];snap();
- show(`<h3>Position & Arrange</h3><p style="font-size:12px;color:#64748b;margin:0 0 8px">Move the selected object with live controls. Changes appear immediately.</p>
+ show(`<h3 style="margin:0 0 3px;font-size:15px">Position & Arrange</h3>
  <div class="positionTabs"><button class="active" data-tab="move">Move</button><button data-tab="rotate">Rotate</button></div>
  <section id="posMove"><div class="positionMeta"><label for="posStep">Move distance (1–100 px)</label><div class="positionStep"><button type="button" id="stepMinus" aria-label="Decrease move distance">−</button><input id="posStep" type="number" min="1" max="100" step="1" value="10" inputmode="numeric"><button type="button" id="stepPlus" aria-label="Increase move distance">+</button></div></div>
- <div class="positionGrid"><span></span><button data-move="0,-1" aria-label="Move up">↑</button><span></span><button data-move="-1,0" aria-label="Move left">←</button><button data-move="0,0" aria-label="Center on canvas">◎</button><button data-move="1,0" aria-label="Move right">→</button><span></span><button data-move="0,1" aria-label="Move down">↓</button><span></span></div>
+ <div class="positionGrid"><button data-move="-1,0" aria-label="Move left">←</button><button data-move="0,-1" aria-label="Move up">↑</button><button data-move="0,0" aria-label="Center on canvas">◎</button><button data-move="0,1" aria-label="Move down">↓</button><button data-move="1,0" aria-label="Move right">→</button></div>
  <div class="positionXY"><label>X position<input id="posX" type="number" value="${Math.round(o.x)}"></label><label>Y position<input id="posY" type="number" value="${Math.round(o.y)}"></label></div></section>
  <section id="posRotate" style="display:none"><label>Rotation angle<input id="posRot" type="range" min="0" max="359" value="${Math.round(((o.rot||0)%360+360)%360)}"></label><div id="posRotValue" style="text-align:center;font-size:14px">${Math.round(o.rot||0)}°</div><div class="positionMeta"><label for="rotStep">Rotation step (1–100°)</label><div class="positionStep"><button type="button" id="rotStepMinus" aria-label="Decrease rotation step">−</button><input id="rotStep" type="number" min="1" max="100" step="1" value="10" inputmode="numeric"><button type="button" id="rotStepPlus" aria-label="Increase rotation step">+</button></div></div><div class="row"><button id="rotateMinus">− Rotate</button><button id="rotatePlus">+ Rotate</button><button data-rot="-90">−90°</button><button data-rot="90">+90°</button></div></section>
- <div class="row"><button id="close">Close</button></div>`,(s,ov)=>{
+ <div class="row" style="margin-top:4px"><button id="close" style="margin:0;padding:6px 11px">Close</button></div>`,(s,ov)=>{
   const redraw=()=>{draw();const x=s.querySelector('#posX'),y=s.querySelector('#posY');if(x)x.value=Math.round(o.x);if(y)y.value=Math.round(o.y)};
   s.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{s.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));['Move','Rotate'].forEach(t=>s.querySelector('#pos'+t).style.display=(b.dataset.tab===t.toLowerCase()?'block':'none'))});
   const stepInput=s.querySelector('#posStep');const clampStep=()=>{let v=parseInt(stepInput.value,10);if(!Number.isFinite(v))v=1;v=Math.max(1,Math.min(100,v));stepInput.value=v;return v};stepInput.addEventListener('change',clampStep);stepInput.addEventListener('blur',clampStep);s.querySelector('#stepMinus').onclick=()=>{stepInput.value=Math.max(1,clampStep()-1)};s.querySelector('#stepPlus').onclick=()=>{stepInput.value=Math.min(100,clampStep()+1)};s.querySelectorAll('[data-move]').forEach(b=>b.onclick=()=>{const [dx,dy]=b.dataset.move.split(',').map(Number),step=clampStep();if(dx===0&&dy===0){o.x=(wrap.clientWidth/zoom-o.w)/2-panX/zoom;o.y=(wrap.clientHeight/zoom-o.h)/2-panY/zoom}else{o.x+=dx*step;o.y+=dy*step}redraw()});
